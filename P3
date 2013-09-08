@@ -1,0 +1,22 @@
+(require 2htdp/image)
+
+;; Image, Image -> Image
+;; Scales first image given to fit within the second image
+
+
+
+(check-expect (scale-image (rotate -15 (ellipse 80 22 "solid" "blue"))
+                           (rectangle 50 50 "outline" "green")) .)
+(check-expect (scale-image (triangle 10 "outline" "green") 
+                           (ellipse 80 45 "solid" "blue")) .)
+
+
+(define (scale-image i1 i2)
+  (if (> 
+       (/ (image-height i1) (image-width i1))
+       (/ (image-height i2) (image-width i2))
+       )
+      (overlay (scale (/ (image-height i2) (image-height i1)) i1) i2)
+      (overlay (scale (/ (image-width i2) (image-width i1)) i1) i2)
+      )
+  )
